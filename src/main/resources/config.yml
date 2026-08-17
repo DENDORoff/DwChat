@@ -1,0 +1,368 @@
+# ============================================================
+#  DwChat — Конфигурация
+# ============================================================
+
+# ── Каналы чата ───────────────────────────────────────────────
+chat:
+
+  # ── Глобальный канал ────────────────────────────────────────
+  global:
+    # Префикс, который игрок вводит перед сообщением для глобального чата
+    # Сообщения с только префиксом (без текста) молча отбрасываются
+    prefix: "!"
+
+    # Формат сообщения. Поддерживает коды цвета (&) и плейсхолдеры:
+    #   {player}        — имя игрока
+    #   {display_name}  — отображаемое имя
+    #   {message}       — текст сообщения
+    #   {world}         — название мира
+    format: "&8[&fG&8] &7{player}&8: &f{message}"
+
+    # Текст при наведении на имя игрока. Оставить пустым — отключить.
+    # Плейсхолдеры: {player}, {display_name}, {world}, {ping}
+    hover: "&7Игрок&8: &f{display_name}\n&7Мир&8: &f{world}\n&7Пинг&8: &f{ping}мс"
+
+    # Клик-действие на имени игрока.
+    # type: run_command | suggest_command | open_url  (пусто — отключить)
+    # value: команда или URL. Плейсхолдер: {player}
+    click:
+      type: suggest_command
+      value: "/msg {player} "
+
+    # Звук для получателей глобальных сообщений
+    sound:
+      enabled: true
+      # Название звука: https://jd.papermc.io/paper/1.21.1/org/bukkit/Sound.html
+      type: BLOCK_NOTE_BLOCK_PLING
+      volume: 0.6
+      pitch: 1.0
+
+  # ── Локальный канал ──────────────────────────────────────────
+  local:
+    # Радиус в блоках. Игроки за пределами радиуса не видят сообщение.
+    # -1 — отключить радиус (видят все игроки в том же мире)
+    radius: 100
+
+    format: "&7{player}&8: &f{message}"
+
+    hover: "&7Игрок&8: &f{display_name}\n&7Мир&8: &f{world}\n&7Пинг&8: &f{ping}мс"
+
+    click:
+      type: suggest_command
+      value: "/msg {player} "
+
+    sound:
+      enabled: true
+      type: BLOCK_NOTE_BLOCK_PLING
+      volume: 0.4
+      pitch: 0.8
+
+# ── Discord ───────────────────────────────────────────────────
+discord:
+  enabled: true
+  token: "ВАШ_ТОКЕН_DISCORD_БОТА"
+  channel-id: "123456789012345678"
+
+  activity:
+    # Типы: PLAYING, WATCHING, LISTENING, STREAMING, COMPETING
+    type: PLAYING
+    text: "Minecraft"
+    stream-url: "https://twitch.tv/example"  # только для STREAMING
+
+  # Отправлять сообщения локального чата в Discord
+  send-local: false
+  # Отправлять сообщения глобального чата в Discord
+  send-global: true
+
+  # Формат Minecraft → Discord
+  # Плейсхолдеры: {player}, {message}, {channel}
+  minecraft-to-discord: "{player} » {message}"
+
+  # Формат Discord → Minecraft (обычное сообщение)
+  # Плейсхолдеры: {author}, {message}, {role}, {role_color}
+  discord-to-minecraft: "&7[&bDiscord&7] &r{role_color}{role} &f{author}&7: &r{message}"
+
+  # Формат Discord → Minecraft (ответ на сообщение)
+  # Плейсхолдеры: {author}, {message}, {role}, {role_color}, {reply_author}, {reply_message}
+  discord-to-minecraft-reply: "&7[&bDiscord&7] &r{role_color}{role} &f{author} &7↩ &f{reply_author}&7: &r{message}"
+
+  # Звук при получении сообщения из Discord
+  sound:
+    enabled: true
+    type: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 0.5
+    pitch: 1.2
+
+  # Формат пересылки Telegram → Discord
+  telegram-forward-format: "📨 **[Telegram]** {author}: {message}"
+
+  # Команды бота: ключ — триггер, значение — ответ
+  # Плейсхолдер в ответе: {online}
+  commands:
+    "!онлайн": "На сервере {online} игроков."
+    "!ip": "IP: play.example.com"
+
+# ── Telegram ──────────────────────────────────────────────────
+telegram:
+  enabled: true
+  token: "ВАШ_ТОКЕН_TELEGRAM_БОТА"
+
+  # ID чата/супергруппы (отрицательное число, например -1001234567890)
+  chat-id: "-1001234567890"
+
+  # ID топика в супергруппе (0 — отключено)
+  topic-thread-id: 0
+
+  # Отправлять сообщения локального чата в Telegram
+  send-local: false
+  # Отправлять сообщения глобального чата в Telegram
+  send-global: true
+
+  # Формат Minecraft → Telegram
+  # Плейсхолдеры: {player}, {message}, {channel}
+  minecraft-to-telegram: "*{player}* » {message}"
+
+  # Формат Telegram → Minecraft (обычное сообщение)
+  # Плейсхолдеры: {author}, {username}, {message}
+  telegram-to-minecraft: "&7[&9Telegram&7] &f{author}&7: &r{message}"
+
+  # Формат Telegram → Minecraft (ответ на сообщение)
+  # Плейсхолдеры: {author}, {username}, {message}, {reply_author}, {reply_message}
+  telegram-to-minecraft-reply: "&7[&9Telegram&7] &f{author} &7↩ &f{reply_author}&7: &r{message}"
+
+  # Звук при получении сообщения из Telegram
+  sound:
+    enabled: true
+    type: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 0.5
+    pitch: 1.0
+
+  # Формат пересылки Discord → Telegram
+  discord-forward-format: "📨 *[Discord]* {author}: {message}"
+
+  # Команды бота: ключ — триггер, значение — ответ
+  commands:
+    "!онлайн": "На сервере {online} игроков."
+    "!ip": "IP: play.example.com"
+
+# ── Пересылка между платформами ───────────────────────────────
+forwarding:
+  discord-to-telegram: true   # пересылать сообщения Discord → Telegram
+  telegram-to-discord: true   # пересылать сообщения Telegram → Discord
+
+# ── События входа/выхода ──────────────────────────────────────
+events:
+  send-join-leave: true
+  join-format-discord:   "✅ **{player}** зашёл на сервер."
+  join-format-telegram:  "✅ *{player}* зашёл на сервер."
+  leave-format-discord:  "❌ **{player}** вышел с сервера."
+  leave-format-telegram: "❌ *{player}* вышел с сервера."
+
+# ── Авто-сообщения ────────────────────────────────────────────
+auto-messages:
+  enabled: true
+
+  # Интервал между сообщениями в секундах
+  interval: 300
+
+  # true  — выбирать случайное сообщение
+  # false — отправлять по очереди
+  random: false
+
+  messages:
+    - text: "&6Сайт&8: &fhttps://example.com"
+      hover: "Нажми, чтобы открыть сайт"
+      click:
+        type: open_url
+        value: "https://example.com"
+
+    - text: "&bDiscord&8: &fhttps://discord.gg/example"
+      hover: "Нажми, чтобы открыть Discord"
+      click:
+        type: open_url
+        value: "https://discord.gg/example"
+
+    - text: "&aПодпишись на нас в Telegram!"
+      hover: "Нажми, чтобы открыть Telegram"
+      click:
+        type: open_url
+        value: "https://t.me/example"
+
+    - text: "&eИспользуй &f!&eперед сообщением для глобального чата."
+      hover: ""
+      click:
+        type: ""
+        value: ""
+
+# ── Сообщения плагина ─────────────────────────────────────────
+messages:
+  no-permission: "&cУ вас нет прав для этой команды."
+  reload-success: "&a[DwChat] Конфигурация перезагружена."
+  usage: "&e/dwchat reload"
+  # Отправляется игроку, когда никто не получил его сообщение
+  noone-heard: "&8[&7!&8] &7Вас никто не услышал."
+
+# ── Автомодерация чата ────────────────────────────────────────
+# Типы действий:
+#   [BLOCK]              — заблокировать сообщение
+#   [MESSAGE] текст      — отправить сообщение нарушителю
+#   [NOTIFY] текст perm={X} — уведомить игроков с правом X
+# Плейсхолдеры: %player%, %msg%, %symbol%, %word%
+chat_settings:
+
+  # Разрешённые символы в чате
+  allowed_chat_chars:
+    enable: true
+    mode: STRING
+    pattern: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ~`1!2@3#4$5%6^7&§89(0)-_=+*|[{]}\\;:\"',<.>/?!№"
+    actions:
+      - "[BLOCK]"
+      - "[MESSAGE] &cОбнаружены запрещённые символы."
+      - "[NOTIFY] &e%player% &7использовал недопустимый символ &6%symbol% &7в чате perm={group.moder}"
+
+  # Разрешённые символы в книгах
+  allowed_book_chars:
+    enable: true
+    mode: STRING
+    pattern: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ~`1!2@3#4$5%6^7&§89(0)-_=+*|[{]}\\;:\"',<.>/?!№"
+    actions:
+      - "[BLOCK]"
+      - "[MESSAGE] &cОбнаружены запрещённые символы."
+      - "[NOTIFY] &e%player% &7использовал недопустимый символ в книге perm={group.moder}"
+
+  # Разрешённые символы на табличках
+  allowed_sign_chars:
+    enable: true
+    mode: STRING
+    pattern: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ~`1!2@3#4$5%6^7&§89(0)-_=+*|[{]}\\;:\"',<.>/?!№"
+    actions:
+      - "[BLOCK]"
+      - "[MESSAGE] &cОбнаружены запрещённые символы."
+      - "[NOTIFY] &e%player% &7использовал недопустимый символ в табличке perm={group.moder}"
+
+  # Ограничение количества цифр в сообщении
+  numbers_check:
+    enable: true
+    strip_color: true       # игнорировать цветовые коды при подсчёте
+    maxmsgnumbers: 7        # максимум цифр в сообщении
+    strict: false           # false — также проверять попытки написать IP-адрес
+    actions:
+      - "[BLOCK]"
+      - "[MESSAGE] &cСлишком много цифр в сообщении."
+      - "[NOTIFY] &e%player% &7отправил сообщение со множеством цифр perm={group.moder}"
+
+  # Антикапс
+  case_check:
+    enable: true
+    max_uppercase_percent: 60   # максимальный процент заглавных букв
+    strict: false               # false — переводить в нижний регистр; true — блокировать
+    actions:
+      - "[MESSAGE] &7Сообщение переведено в нижний регистр."
+      - "[NOTIFY] &e%player% &7пишет капсом perm={group.moder}"
+
+  # Антифлуд (схожие сообщения)
+  same_messages:
+    enable: true
+    same_percents: 70       # процент схожести для считывания как «одинаковое»
+    max_same_message: 2     # максимум схожих сообщений подряд
+    min_message_length: 3   # минимальная длина для проверки
+    history_size: 10        # размер истории сообщений игрока
+    strip_color: true
+    actions:
+      - "[BLOCK]"
+      - "[MESSAGE] &cНе отправляйте одно и то же сообщение многократно."
+      - "[NOTIFY] &e%player% &7флудит perm={group.moder}"
+
+  # Запрещённые слова
+  ban_words_chat:
+    enable: true
+    mode: STRING
+    strict: false           # false — заменять на censor_symbol; true — блокировать
+    censor_symbol: "***"
+    strip_color: true
+    words:
+      - "хуй"
+      - "хуя"
+      - "долба"
+      - "далба"
+      - "еблан"
+      - "сука"
+      - "бля"
+      - "пизд"
+      - "пенис"
+    actions:
+      - "[MESSAGE] &cВаше сообщение содержит запрещённые слова."
+      - "[NOTIFY] &e%player% &7использовал запрещённое слово &6%word% perm={group.moder}"
+
+# ── Фильтр команд ────────────────────────────────────────────
+# Типы действий (можно комбинировать):
+#
+#   Блокировка выполнения:
+#     [BLOCK]       — заблокировать команду для ВСЕХ игроков
+#     [LITE_BLOCK]  — заблокировать команду для всех БЕЗ права dwchat.admin
+#
+#   Скрытие ответа сервера (feedback в игре, не консольный лог):
+#     [HIDE]        — скрыть ответ команды для ВСЕХ игроков
+#     [LITE_HIDE]   — скрыть ответ команды для всех БЕЗ права dwchat.admin
+#
+#   Таб-комплит:
+#     [BLOCK_TAB_COMPLETE]       — скрыть из подсказок для ВСЕХ
+#     [LITE_BLOCK_TAB_COMPLETE]  — скрыть из подсказок для всех БЕЗ dwchat.admin
+#
+#   Уведомления:
+#     [MESSAGE] текст            — отправить сообщение игроку
+#     [NOTIFY] текст perm={X}   — уведомить игроков с правом X
+#
+# Плейсхолдеры в уведомлениях: %player%, %cmd%
+commands:
+
+  # Основной список заблокированных команд
+  default:
+    mode: STRING          # STRING — точное совпадение имени | PATTERN — регулярное выражение
+    block_aliases: true   # true — также блокировать minecraft:command и любые алиасы
+    commands:
+      # Ядра сервера
+      - leaf
+      - purpur
+      - paper
+      - spigot
+      - bukkit
+      # Стандартные чувствительные команды
+      - plugins
+      - help
+      - "?"
+      - version
+      - op
+      - deop
+      - stop
+      - restart
+      - reload
+      - icanhasbukkit
+      # Плагины
+      - luckperms
+      - essentials
+      - tab
+      - vault-info
+      - vault-convert
+      - placeholderapi
+      - worldedit
+      - worldguard
+      - fastasyncworldedit
+      - spark
+    actions:
+      - "[LITE_BLOCK]"              # блокировать выполнение (кроме admins)
+      - "[LITE_HIDE]"               # скрыть ответ сервера (кроме admins)
+      - "[LITE_BLOCK_TAB_COMPLETE]" # скрыть из таб-комплита (кроме admins)
+      - "[MESSAGE] &cКоманда не найдена."
+      - "[NOTIFY] &e%player% &7использовал заблокированную команду &6%cmd% perm={group.moder}"
+
+  # Блокировка команд с двоеточием (namespace:command — обход фильтра)
+  blocksyntax:
+    mode: PATTERN
+    commands:
+      - "\\S+:.*"         # любая строка вида "что-то:что-то"
+    actions:
+      - "[LITE_BLOCK]"
+      - "[LITE_HIDE]"
+      - "[LITE_BLOCK_TAB_COMPLETE]"
+      - "[NOTIFY] &e%player% &7попытался использовать namespace-команду &6%cmd% perm={group.moder}"

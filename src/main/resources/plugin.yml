@@ -1,0 +1,115 @@
+name: DwChat
+version: '1.0.0'
+main: su.deworld.dwchat.DwChat
+api-version: '1.21'
+description: Advanced chat plugin with local/global channels and Discord/Telegram bridge
+authors: [ DENDOR ]
+folia-supported: false
+
+permissions:
+  dwchat.admin:
+    description: Full access to DwChat
+    default: op
+  dwchat.global:
+    description: Permission to use global chat prefix
+    default: true
+  dwchat.local:
+    description: Permission to use local chat
+    default: true
+
+  # ── Color permissions ──────────────────────────────────────
+  dwchat.color.*:
+    description: All colors and hex in chat
+    default: false
+    children:
+      dwchat.color.hex: true
+      dwchat.color.0: true
+      dwchat.color.1: true
+      dwchat.color.2: true
+      dwchat.color.3: true
+      dwchat.color.4: true
+      dwchat.color.5: true
+      dwchat.color.6: true
+      dwchat.color.7: true
+      dwchat.color.8: true
+      dwchat.color.9: true
+      dwchat.color.a: true
+      dwchat.color.b: true
+      dwchat.color.c: true
+      dwchat.color.d: true
+      dwchat.color.e: true
+      dwchat.color.f: true
+  dwchat.color.hex:
+    description: Hex color codes (&x&R&R&G&G&B&B)
+    default: false
+  dwchat.color.0:
+    description: Black color (&0)
+    default: false
+  dwchat.color.1:
+    description: Dark blue color (&1)
+    default: false
+  dwchat.color.2:
+    description: Dark green color (&2)
+    default: false
+  dwchat.color.3:
+    description: Dark aqua color (&3)
+    default: false
+  dwchat.color.4:
+    description: Dark red color (&4)
+    default: false
+  dwchat.color.5:
+    description: Dark purple color (&5)
+    default: false
+  dwchat.color.6:
+    description: Gold color (&6)
+    default: false
+  dwchat.color.7:
+    description: Gray color (&7)
+    default: false
+  dwchat.color.8:
+    description: Dark gray color (&8)
+    default: false
+  dwchat.color.9:
+    description: Blue color (&9)
+    default: false
+  dwchat.color.a:
+    description: Green color (&a)
+    default: false
+  dwchat.color.b:
+    description: Aqua color (&b)
+    default: false
+  dwchat.color.c:
+    description: Red color (&c)
+    default: false
+  dwchat.color.d:
+    description: Light purple color (&d)
+    default: false
+  dwchat.color.e:
+    description: Yellow color (&e)
+    default: false
+  dwchat.color.f:
+    description: White color (&f)
+    default: false
+
+  # ── Font/format permissions ────────────────────────────────
+  dwchat.font.bold:
+    description: Bold text (&l)
+    default: false
+  dwchat.font.italic:
+    description: Italic text (&o)
+    default: false
+  dwchat.font.underline:
+    description: Underlined text (&n)
+    default: false
+  dwchat.font.strikethrough:
+    description: Strikethrough text (&m)
+    default: false
+  dwchat.font.obfuscated:
+    description: Obfuscated text (&k)
+    default: false
+
+commands:
+  dwchat:
+    description: DwChat main command
+    usage: /dwchat <reload>
+    permission: dwchat.admin
